@@ -8,10 +8,8 @@
     </div>
     <div v-else>
       <div>
-        ログインはこちら
-      </div>
-      <div>
-        新規登録はこちら
+        <router-link to="loginForm">ログインフォームへ</router-link>
+        <router-link to="signUp">ログインフォームへ</router-link>
       </div>
     </div>
   </header>

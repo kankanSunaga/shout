@@ -1,9 +1,6 @@
 <template>
   <div>
     <div>
-      <input type="text" placeholder="ニックネーム" v-model="userName" @blur="notBlankName()" >
-    </div>
-    <div>
       <input type="text" placeholder="メールアドレス" v-model="userId" @blur="validEmailformat()">
     </div>
     <div>
@@ -12,7 +9,6 @@
     <div>
       <input type="password" placeholder="パスワード確認" v-model="conformPassword" @blur="samePassword()">
     </div>
-    <div>{{nameMessage}}</div>
     <div>{{emailMessage}}</div>
     <div>{{passwordMessage}}</div>
     <div>{{conformPasswordMessage}}</div>
@@ -27,16 +23,13 @@
   export default{
     data () {
       return { 
-        userName: '',
         email: '',
         password: '',
         conformPassword: '',
-        nameMessage: '',
         emailMessage: '',
         passwordMessage: '',
         conformPasswordMessage: '',
         // alertMessage: '',
-        nameStatus: false,
         emailStatus: false,
         passwordStats: false,
         conformPasswordStats: false,
@@ -45,20 +38,19 @@
     },
     methods: {
       CreateUser () {
-        alert(this)
+        this.$cognito.signUp(this.userId, this.password)
+        .then( resutl => {
+          // 登録に成功したら、確認コードの入力画面を表示
+          this.$router.replace('/confirm')
+          alert(resutl)
+        })
+        .catch(err => {
+          alert(err)
+        })
       },
       checkValidStatus() {
-        if (this.nameStatus && this.emailStatus && this.passwordStats && this.conformPasswordStats){
+        if (this.emailStatus && this.passwordStats && this.conformPasswordStats){
           self.disabledButton = false
-        }
-      },
-      notBlankName() {
-        if (this.userName === '' || this.userName === null ){
-          this.nameMessage = 'ニックネームを入力してください'
-        }else{
-          this.nameMessage = 'ニックネームOK!'
-          this.nameStatus = true
-          this.checkValidStatus()
         }
       },
       validEmailformat() {

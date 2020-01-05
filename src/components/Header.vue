@@ -9,7 +9,7 @@
     <div v-else>
       <div>
         <router-link to="loginForm">ログインフォームへ</router-link>
-        <router-link to="signUp">ログインフォームへ</router-link>
+        <router-link to="signUp">ユーザー登録へ</router-link>
       </div>
     </div>
   </header>

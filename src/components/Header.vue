@@ -3,7 +3,7 @@
     <h3>shout</h3>
     <div v-if="loggIned">
       <div>
-        ユーザー設定
+        <router-link to="logout">ログアウト</router-link>
       </div>
     </div>
     <div v-else>
@@ -12,13 +12,21 @@
         <router-link to="signUp">ユーザー登録へ</router-link>
       </div>
     </div>
+    {{loggIned}}
   </header>
 </template>
 
 <script>
   export default{
     data () {
-      return { loggIned: false}
+      return { loggIned: this.$cognito.isAuthenticated().then(session => {
+        this.loggIned = true
+        session
+      }).catch( err =>{
+        this.loggIned = false
+        err
+      })
+      }
     }
   }
 </script>

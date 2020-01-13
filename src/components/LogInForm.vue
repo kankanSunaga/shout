@@ -9,6 +9,7 @@
     <div>
       <button @click="AuthLogin()">ログイン</button>
     </div>
+    {{message}}
   </div>
 </template>
 
@@ -17,12 +18,20 @@
     data () {
       return { 
         userId: '',
-        password: ''
+        password: '',
+        message: ''
       }
     },
     methods: {
       AuthLogin () {
-        alert(this)
+        this.$cognito.login(this.userId, this.password).then( result =>{
+          result
+          this.$router.replace('/')
+        })
+        .catch( err =>{
+          err
+          this.message = "パスワードもしくはIDが正しくありません。"
+        })
       }
     }
   }

@@ -112,6 +112,7 @@ export default class Cognito {
     const cognitoUser = this.userPool.getCurrentUser()
     return new Promise((resolve, reject) => {
       if (cognitoUser === null) {
+        alert("失敗")
         reject(cognitoUser)
       }
       cognitoUser.getSession((err, session) => {
@@ -119,12 +120,26 @@ export default class Cognito {
           reject(err)
         } else {
           if (!session.isValid()) {
+            alert("失敗")
             reject(session)
           } else {
+            console.log(session)
             resolve(session)
           }
         }
       })
+    })
+  }
+
+  getUserInfo (){
+    const cognitoUser = this.userPool.getCurrentUser()
+    cognitoUser.getUserAttributes(function (err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        alert("オK")
+        console.log( result)
+      }
     })
   }
 }

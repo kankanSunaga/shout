@@ -25,20 +25,19 @@ export default{
       creatShot () {
         const shoutCreateUrl = "https://jwhulxr6g0.execute-api.ap-northeast-1.amazonaws.com/dev/shout/create"
         const user = cognito.userPool.getCurrentUser()
-        const seesion = user.getSession(function(err, session) {
+        const jwtToken = user.getSession(function(err, session) {
           if (err) {
             console.log(err);
           } else {
-            return session
+            return session["idToken"]["jwtToken"]
             }
         });
-        console.log(seesion["idToken"]["jwtToken"])
         const data = { "textMessage": this.shoutText, "user_name": user["username"]}
 
        axios.post(shoutCreateUrl, 
         data,
         {
-          headers: {'Authorization': seesion["idToken"]["jwtToken"]}
+          headers: {'Authorization': jwtToken }
         }
       ).then(response => {
           console.log('送信したテキスト: ' + response.data.text);

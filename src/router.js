@@ -12,8 +12,6 @@ import Shouts from './components/Shouts.vue'
 Vue.use(Router)
 
 const logout = (to, from, next) => {
-  from
-  to
   cognito.logout()
   next('/home')
 }

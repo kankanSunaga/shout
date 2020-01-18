@@ -25,11 +25,11 @@
     methods: {
       AuthLogin () {
         this.$cognito.login(this.userId, this.password).then( result =>{
-          result
-          this.$router.replace('/')
+          console.log(result)
+          this.$router.push('/shouts')
         })
         .catch( err =>{
-          err
+          console.log(err)
           this.message = "パスワードもしくはIDが正しくありません。"
         })
       }

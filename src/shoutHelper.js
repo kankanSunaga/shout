@@ -9,10 +9,15 @@ export default class shoutHelper {
     const data = { "textMessage": text }
     axios.post(shoutCreateUrl, data, {
       headers: {
-        Authorization: user["AccessToken"]
+        Authorization: user["accessToken"]
     }}
     ).then( response => {
-      response
+      console.log(response)
+      if (response) {
+        console.log("成功！！！！！！！")
+      } else {
+        console.log("失敗")
+      }
     });
   }
 }

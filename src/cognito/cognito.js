@@ -95,6 +95,7 @@ export default class Cognito {
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
+          console.log(result)
           resolve(result)
         },
         onFailure: (err) => {
@@ -112,7 +113,6 @@ export default class Cognito {
     const cognitoUser = this.userPool.getCurrentUser()
     return new Promise((resolve, reject) => {
       if (cognitoUser === null) {
-        alert("失敗")
         reject(cognitoUser)
       }
       cognitoUser.getSession((err, session) => {
@@ -120,10 +120,8 @@ export default class Cognito {
           reject(err)
         } else {
           if (!session.isValid()) {
-            alert("失敗")
             reject(session)
           } else {
-            console.log(session)
             resolve(session)
           }
         }
@@ -137,7 +135,6 @@ export default class Cognito {
       if (err) {
         console.log(err)
       } else {
-        alert("オK")
         console.log( result)
       }
     })

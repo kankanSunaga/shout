@@ -1,12 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import cognito from './cognito'
 import LogInForm from './components/LogInForm.vue'
 import SignUpForm from './components/SignUpForm.vue'
 import Home from './components/Home.vue'
 import Confirm from './components/Confirm.vue'
+import Shouts from './components/Shouts.vue'
+
 
 
 Vue.use(Router)
+
+const logout = (to, from, next) => {
+  cognito.logout()
+  next('/home')
+}
+
 
 export default new Router({
   routes: [
@@ -29,6 +38,15 @@ export default new Router({
       path: '/confirm',
       name: 'Confirm',
       component: Confirm
+    },
+    {
+      path: '/logout',
+      beforeEnter: logout
+    },
+    {
+      path: '/shouts',
+      name: 'Shouts',
+      component: Shouts
     }
   ]
 })

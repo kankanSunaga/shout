@@ -95,6 +95,7 @@ export default class Cognito {
     return new Promise((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (result) => {
+          console.log(result)
           resolve(result)
         },
         onFailure: (err) => {
@@ -125,6 +126,17 @@ export default class Cognito {
           }
         }
       })
+    })
+  }
+
+  getUserInfo (){
+    const cognitoUser = this.userPool.getCurrentUser()
+    cognitoUser.getUserAttributes(function (err, result) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log( result)
+      }
     })
   }
 }

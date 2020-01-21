@@ -139,4 +139,16 @@ export default class Cognito {
       }
     })
   }
+
+  getJwtToken() {
+    const user = this.userPool.getCurrentUser()
+    const token = user.getSession((err, session) => {
+      if (err) {
+        console.log(err);
+      } else {
+        return session
+      }
+    });
+    return token
+  }
 }

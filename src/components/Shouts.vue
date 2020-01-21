@@ -40,26 +40,14 @@ export default{
           headers: {'Authorization': jwtToken }
         }
       ).then(response => {
-          console.log('送信したテキスト: ' + response.data.text);
+          // const dynamoHash = JSON.parse(response);
+          // console.log(dynamoHash)
+          return response["body"]
         }).catch(error => {
           console.log(error);
+          return error
         });
 
-      },
-
-      testGet () {
-        const url = "https://jwhulxr6g0.execute-api.ap-northeast-1.amazonaws.com/dev/shout"
-        const user =  cognito.userPool.getCurrentUser()
-        const data = { "textMessage": this.shoutText, "user_name": user["username"]}
-
-        fetch(url, {
-          mode: 'cors',
-          method: 'POST',
-          body: data
-        })
-        .then(response => {
-          console.log(response)
-        });
       }
     }
   }

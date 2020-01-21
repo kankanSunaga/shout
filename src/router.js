@@ -6,7 +6,7 @@ import SignUpForm from './components/SignUpForm.vue'
 import Home from './components/Home.vue'
 import Confirm from './components/Confirm.vue'
 import Shouts from './components/Shouts.vue'
-
+import Index from './components/Index.vue'
 
 
 Vue.use(Router)
@@ -47,6 +47,11 @@ export default new Router({
       path: '/shouts',
       name: 'Shouts',
       component: Shouts
+    },
+    {
+      path: '/index',
+      name: 'index',
+      component: Index
     }
   ]
 })

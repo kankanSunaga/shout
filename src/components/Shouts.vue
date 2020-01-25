@@ -5,7 +5,6 @@
   </p>
   <p>
     <button @click="creatShot">作成する</button>
-    <button @click="testGet">作成</button>
   </p>
     {{message}}
   </div>

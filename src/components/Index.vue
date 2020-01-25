@@ -5,6 +5,7 @@
     <div v-for="(shout, index) in shouts" :key='index'>
       <div>{{ shout.message }}</div>
       <div>{{ shout.create_time }}</div>
+      <shoutOption :message="shout.message" :time="shout.create_time"></shoutOption>
     </div>
     
   </div>
@@ -12,10 +13,15 @@
 <script>
 import cognito from '../cognito'
 import axios from "axios"
+import ShoutOption from './ShoutOption.vue'
 
 export default {
+  components: {
+    ShoutOption
+  },
   data () {
     return {
+      editFlag: false,
       shouts: "",
       count: ""  
     }
@@ -34,7 +40,7 @@ export default {
     ).then(response => {
       const shoutsDict =  JSON.parse(response.data.body)
       this.count = shoutsDict.Count
-      this.shouts = shoutsDict.Items
+      this.shouts = shoutsDict.Items.reverse();
 
     }).catch(error => {
       console.log(error);

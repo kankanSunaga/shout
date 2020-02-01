@@ -4,6 +4,8 @@
       叫び：<input type="text" v-model="shoutText">
   </p>
   <p>
+    <img v-show="uploadedImage" :src="uploadedImage"/>
+    <input type="file" v-on:change="onFileChange">
     <button @click="creatShot">作成する</button>
   </p>
     {{message}}
@@ -16,6 +18,7 @@ import axios from "axios"
 export default{
     data () {
       return { 
+        uploadedImage: '',
         shoutText: '',
         message: ''
       }
@@ -31,12 +34,15 @@ export default{
             return session["idToken"]["jwtToken"]
             }
         });
-        const data = { "textMessage": this.shoutText, "user_name": user["username"]}
+        const data = { "textMessage": this.shoutText, "user_name": user["username"], "img": this.uploadedImage}
 
        axios.post(shoutCreateUrl, 
         data,
         {
-          headers: {'Authorization': jwtToken }
+          headers: {
+            'Authorization': jwtToken,
+            'content-type': 'image/png',
+           }
         }
       ).then(response => {
           // const dynamoHash = JSON.parse(response);
@@ -47,7 +53,19 @@ export default{
           return error
         });
 
-      }
+      },
+      onFileChange(e) {
+        let files = e.target.files || e.dataTransfer.files;
+        this.createImage(files[0]);
+      },
+      // アップロードした画像を表示
+      createImage(file) {
+        let reader = new FileReader();
+        reader.onload = (e) => {
+          this.uploadedImage = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      },
     }
   }
 </script>

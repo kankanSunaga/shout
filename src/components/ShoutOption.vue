@@ -47,8 +47,7 @@ export default {
         }
       ).then(response => {
         console.log(response)
-        // console.log(dynamoHash)
-        return response["body"]
+        this.$router.go({path: this.$router.currentRoute.path, force: true});
       }).catch(error => {
         console.log(error);
         return error

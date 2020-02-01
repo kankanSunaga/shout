@@ -47,7 +47,8 @@ export default{
       ).then(response => {
           // const dynamoHash = JSON.parse(response);
           // console.log(dynamoHash)
-          return response["body"]
+          console.log(response)
+          this.$router.push("/index");
         }).catch(error => {
           console.log(error);
           return error

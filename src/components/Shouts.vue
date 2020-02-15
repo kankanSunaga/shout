@@ -4,9 +4,13 @@
       叫び：<input type="text" v-model="shoutText" >
   </p>
   <p>
-    <button @click="creatShout">作成する</button>
+    <button @click="pushButton">作成する</button>
   </p>
-    {{message}}
+    <div>
+      さらに作成する:<input type="checkbox" id="checkbox" v-model="checked">
+    </div>
+    {{ message }}
+    {{ sendText }}
   </div>
 </template>
 
@@ -17,10 +21,22 @@ export default{
     data () {
       return { 
         shoutText: '',
-        message: ''
+        message: '',
+        sendText: '',
+        checked: false
       }
     },
     methods: {
+      pushButton(){
+        const result = this.creatShout ()
+        if ( !result ) {
+          this.message = "作成に失敗しました"
+        } else if ( this.checked && result ) {
+          this.setupNextShout()
+        } else {
+          this.$router.push("/index");
+        }
+      },
       creatShout () {
         if (!this.shoutText){
           this.message = "文字を入力してください"
@@ -36,22 +52,27 @@ export default{
           });
           const data = { "textMessage": this.shoutText, "user_name": user["username"]}
 
-        axios.post(shoutCreateUrl, 
+        const result = axios.post(shoutCreateUrl, 
           data,
           {
             headers: {
               'Authorization': jwtToken            
             }
           }
-        ).then(response => {
+          ).then(response => {
             console.log(response)
-            this.$router.push("/index");
+            return true
           }).catch(error => {
-            console.log(error);
-            return error
-          });
-      }
-
+            console.log(error)
+            return false 
+         });
+         return result
+        }
+      },
+      setupNextShout() {
+        const mesageBase = "登録されたShout:"
+        this.sendText = mesageBase + this.shoutText
+        this.shoutText = ''
       },
     }
   }

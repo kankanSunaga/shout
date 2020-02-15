@@ -26,7 +26,7 @@
       AuthLogin () {
         this.$cognito.login(this.userId, this.password).then( result =>{
           console.log(result)
-          this.$router.push('/shouts')
+          this.$router.push('/index')
         })
         .catch( err =>{
           console.log(err)

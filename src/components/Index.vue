@@ -1,5 +1,6 @@
 <template>
   <div>
+     <button @click="resetPasswordTest()">いざ</button>
     <p>シャウト:{{count}}回</p>
 
     <div v-for="(shout, index) in showShouts" :key='index' @model="isShow()">
@@ -68,6 +69,9 @@ export default {
     addShowShoutLinst(){
       this.showShouts = this.showShouts.concat(this.hideShouts.slice(0, 4))
       this.hideShouts.splice(0, 4)
+    },
+    resetPasswordTest (){
+      cognito.resetPassword()
     }
   }
 }

@@ -151,4 +151,35 @@ export default class Cognito {
     });
     return token
   }
+
+  resetPassword (){
+    const user = this.userPool.getCurrentUser()
+    const result = user.forgotPassword({
+      onFailure: (err) => {
+        console.log(err);
+        return false
+      },
+      inputVerificationCode: (data) => {
+        console.log(data);
+        return true
+      }
+    })
+    console.log(result)
+    return result
+  }
+
+  updatePassword(newPassword, confirmationCode) {
+    const user = this.userPool.getCurrentUser()
+    const result = user.confirmPassword(confirmationCode, newPassword, {
+      onSuccess: () => {
+        console.log('Password confirmed!');
+        return true
+      },
+      onFailure: (err) => {
+        console.log(err);
+        return false
+      }
+    });
+    return result
+  }
 }

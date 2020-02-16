@@ -4,6 +4,7 @@
     <div v-if="loggIned">
       <div>
         <router-link to="logout">ログアウト</router-link>
+        <router-link to="ResetPassword">パスワードを変更する</router-link>
       </div>
     </div>
     <div v-else>

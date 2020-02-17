@@ -12,7 +12,6 @@
     <div>{{emailMessage}}</div>
     <div>{{passwordMessage}}</div>
     <div>{{conformPasswordMessage}}</div>
-    <div>{{AlertMessage}}</div>
     <div>
       <button v-bind:disabled="disabledButton" @click="CreateUser()">ログイン</button>
     </div>
@@ -23,17 +22,16 @@
   export default{
     data () {
       return { 
-        email: '',
+        userId: '',
         password: '',
         conformPassword: '',
         emailMessage: '',
         passwordMessage: '',
         conformPasswordMessage: '',
-        // alertMessage: '',
         emailStatus: false,
         passwordStats: false,
         conformPasswordStats: false,
-        disabledButton: false //正規表現でメールアドレスがいい感じになったらなおす
+        disabledButton: true //正規表現でメールアドレスがいい感じになったらなおす
       }
     },
     methods: {
@@ -54,8 +52,8 @@
         }
       },
       validEmailformat() {
-        const emailPatarn =  /^\w+([-+.]\w+)*@\.\w+([-.]\w+)*$/
-        if (this.email.match(emailPatarn) === null) {
+        const emailPatarn =  /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
+        if (this.userId.match(emailPatarn) === null) {
           this.emailMessage = '正しいメールアドレスを入力してください' 
         }else{
           this.emailMessage = 'メールアドレスOK!'

@@ -7,7 +7,6 @@ import Home from './components/Home.vue'
 import Confirm from './components/Confirm.vue'
 import Shouts from './components/Shouts.vue'
 import Index from './components/Index.vue'
-import ResetPassword from './components/ResetPassword.vue'
 
 
 
@@ -54,11 +53,6 @@ export default new Router({
       path: '/index',
       name: 'index',
       component: Index
-    },
-    {
-      path: '/resetPassword',
-      name: 'resetPassword',
-      component: ResetPassword
     }
   ]
 })

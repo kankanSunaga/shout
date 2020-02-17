@@ -9,6 +9,7 @@ import {
   CognitoIdentityCredentials
 } from 'aws-sdk'
 
+
 export default class Cognito {
   configure(config) {
     if (config.userPool) {
@@ -152,34 +153,31 @@ export default class Cognito {
     return token
   }
 
-  resetPassword (){
+  resetPassword() {
     const user = this.userPool.getCurrentUser()
-    const result = user.forgotPassword({
+    user.forgotPassword({
+      onSuccess: (data) => {
+        console.log("this is succsess data")
+        console.log(data);
+      },
       onFailure: (err) => {
+        console.log("this is error data")
         console.log(err);
-        return false
       },
       inputVerificationCode: (data) => {
-        console.log(data);
-        return true
+        console.log(data)
+        const verificationCode = prompt('検証コードを入力してください ', '');
+        const newPassword = prompt('新しいパスワードを入力してください ', '');
+        user.confirmPassword(verificationCode, newPassword, {
+          onSuccess: () => {
+            console.log('Password confirmed!');
+            
+          },
+          onFailure: (err) => {
+            console.log(err);
+          }
+        });
       }
     })
-    console.log(result)
-    return result
-  }
-
-  updatePassword(newPassword, confirmationCode) {
-    const user = this.userPool.getCurrentUser()
-    const result = user.confirmPassword(confirmationCode, newPassword, {
-      onSuccess: () => {
-        console.log('Password confirmed!');
-        return true
-      },
-      onFailure: (err) => {
-        console.log(err);
-        return false
-      }
-    });
-    return result
   }
 }

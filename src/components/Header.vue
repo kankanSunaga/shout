@@ -4,7 +4,7 @@
     <div v-if="loggIned">
       <div>
         <router-link to="logout">ログアウト</router-link>
-        <router-link to="ResetPassword">パスワードを変更する</router-link>
+        <a @click="updatePassword()">パスワードを変更する</a>
       </div>
     </div>
     <div v-else>
@@ -18,18 +18,28 @@
 </template>
 
 <script>
-  export default{
-    data () {
-      return { loggIned: this.$cognito.isAuthenticated().then(session => {
-        this.loggIned = true
-        session
-      }).catch( err =>{
-        this.loggIned = false
-        err
-      })
+export default{
+  data() {
+    return { loggIned: this.$cognito.isAuthenticated().then(session => {
+      this.loggIned = true
+      session
+    }).catch( err =>{
+      this.loggIned = false
+      err
+    })
+    }
+  },
+  methods: {
+    updatePassword (){
+      const result = this.$cognito.resetPassword()
+      if ( result ) {
+        this.message = "パスワードを更新しました"
+      } else {
+        this.message = "エラーが発生しました"
       }
     }
   }
+}
 </script>
 
 <style>

@@ -20,14 +20,7 @@
 <script>
 export default{
   data() {
-    return { loggIned: this.$cognito.isAuthenticated().then(session => {
-      this.loggIned = true
-      session
-    }).catch( err =>{
-      this.loggIned = false
-      err
-    })
-    }
+    return { loggIned: this.$cognito.isAuthenticated()}
   },
   methods: {
     updatePassword (){

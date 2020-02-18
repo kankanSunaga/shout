@@ -47,12 +47,36 @@ export default new Router({
     {
       path: '/shouts',
       name: 'Shouts',
-      component: Shouts
+      component: Shouts,
+      beforeEnter: function (to, from, next) {
+        if (!cognito.isAuthenticated()) {
+          next({
+            path: '/home',
+            query: {
+              redirect: to.fullPath
+            }
+          })
+        } else {
+          next()
+        }
+      }
     },
     {
       path: '/index',
       name: 'index',
-      component: Index
+      component: Index,
+      beforeEnter: function (to, from, next) {
+        if (!cognito.isAuthenticated()) {
+          next({
+            path: '/home',
+            query: {
+              redirect: to.fullPath
+            }
+          })
+        } else {
+          next()
+        }
+      }
     }
   ]
 })

@@ -112,22 +112,11 @@ export default class Cognito {
 
   isAuthenticated() {
     const cognitoUser = this.userPool.getCurrentUser()
-    return new Promise((resolve, reject) => {
-      if (cognitoUser === null) {
-        reject(cognitoUser)
-      }
-      cognitoUser.getSession((err, session) => {
-        if (err) {
-          reject(err)
-        } else {
-          if (!session.isValid()) {
-            reject(session)
-          } else {
-            resolve(session)
-          }
-        }
-      })
-    })
+    if (cognitoUser === null) {
+      return false
+    } else {
+      cognitoUser.getSession()
+    }
   }
 
   getUserInfo (){
